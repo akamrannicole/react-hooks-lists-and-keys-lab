@@ -38,3 +38,25 @@ test("renders a <span> for each technology passed in as a prop", () => {
     expect(span.tagName).toBe("SPAN");
   }
 });
+
+test("renders a <ProjectItem> for each project passed in as a prop", () => {
+  render(
+    <ProjectItem
+      name={project.name}
+      about={project.about}
+      technologies={project.technologies}
+    />
+  );
+
+  // Query for the <h3> element containing the project name
+  const projectTitle = screen.queryByText(project.name);
+  expect(projectTitle).toBeInTheDocument();
+  expect(projectTitle.tagName).toBe("H3");
+
+  // Query for each technology
+  for (const technology of project.technologies) {
+    const span = screen.queryByText(technology);
+    expect(span).toBeInTheDocument();
+    expect(span.tagName).toBe("SPAN");
+  }
+});
